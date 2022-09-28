@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { AuthGuard } from '../guards/auth.guard';
+
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -8,9 +11,11 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 
+
 const routes: Routes = [
   { path: 'dashboard', 
     component: PagesComponent,
+    canActivate: [ AuthGuard ],
     children: [
       { path: '', component: DashboardComponent, data: {titulo: 'dashboard'} },
       { path: 'progress', component: ProgressComponent, data: {titulo: 'progress'} },
