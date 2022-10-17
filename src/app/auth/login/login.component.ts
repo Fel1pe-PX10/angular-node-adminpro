@@ -15,7 +15,7 @@ declare const google: any;
 export class LoginComponent implements AfterViewInit {
   
   public loginForm = this.fb.group({
-    email:    [localStorage.getItem('email') || '', [Validators.required, Validators.email]],
+    email:    [localStorage.getItem('email') || 'user1@test.com', [Validators.required, Validators.email]],
     password: ['123456', [Validators.required]],
     remember: [false]
   });
@@ -55,11 +55,10 @@ export class LoginComponent implements AfterViewInit {
   
 
   login(){
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
     this.usuarioService.login(this.loginForm.value)
       .subscribe(resp => {
-        console.log(resp);
-
+        
         if(this.loginForm.get('remember')?.value){
           localStorage.setItem('email', this.loginForm.get('email')?.value)
         }
@@ -73,7 +72,6 @@ export class LoginComponent implements AfterViewInit {
       }, (err) => {
         Swal.fire('Error', err.error.msg, 'error');
       });
-    //this.router.navigateByUrl('/');
   }
 
 }
