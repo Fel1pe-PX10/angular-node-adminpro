@@ -4,6 +4,7 @@ import { catchError, map, Observable, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import { Cargarusuario } from '../interfaces/cargar-usuario.iterface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
 
@@ -27,6 +28,14 @@ export class UsuarioService {
   
   get uid(): string{
     return this.usuario.uid || '';
+  }
+
+  get headers(){
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
 
@@ -108,6 +117,11 @@ export class UsuarioService {
           localStorage.setItem('token', resp.token)
         })
       );
+  }
+
+  cargarUsuario(desde: number = 0){
+    const url = `${ base_url }/usuarios?desde=${ desde }`
+    return this.http.get<Cargarusuario>(url, this.headers);
   }
 
 

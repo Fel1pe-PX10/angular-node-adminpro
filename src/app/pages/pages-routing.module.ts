@@ -3,14 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../guards/auth.guard';
 
-import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProgressComponent } from './progress/progress.component';
-import { Grafica1Component } from './grafica1/grafica1.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { Grafica1Component } from './grafica1/grafica1.component';
+import { PagesComponent } from './pages.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { ProgressComponent } from './progress/progress.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
-import { PerfilComponent } from './perfil/perfil.component';
+
+
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 
 
 const routes: Routes = [
@@ -24,7 +27,12 @@ const routes: Routes = [
       { path: 'perfil', component: PerfilComponent, data: {titulo: 'Perfil de Usuario'} },
       { path: 'progress', component: ProgressComponent, data: {titulo: 'progress'} },
       { path: 'promesas', component: PromesasComponent, data: {titulo: 'promesas'} },
-      { path: 'rxjs', component: RxjsComponent, data: {titulo: 'operadores'} }
+      { path: 'rxjs', component: RxjsComponent, data: {titulo: 'operadores'} },
+
+      // Mantenimientos
+      { path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Usuarios de Aplicación'} },
+      { path: 'medicos', component: UsuariosComponent, data: {titulo: 'Usuarios de Aplicación'} },
+      { path: 'hospitales', component: UsuariosComponent, data: {titulo: 'Usuarios de Aplicación'} }
     ]
   }, 
 ];
