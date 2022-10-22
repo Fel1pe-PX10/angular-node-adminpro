@@ -15,6 +15,10 @@ export class Usuario {
     ){}
 
     get imagenUrl() {
+
+        if(!this.img){
+            return `${baseUrl}/uploads/no-image.png`;
+        }
         
         if(this.img?.includes('https')){
             console.log(this.img);

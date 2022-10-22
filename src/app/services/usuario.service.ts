@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { catchError, map, Observable, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -121,7 +122,18 @@ export class UsuarioService {
 
   cargarUsuario(desde: number = 0){
     const url = `${ base_url }/usuarios?desde=${ desde }`
-    return this.http.get<Cargarusuario>(url, this.headers);
+    return this.http.get<Cargarusuario>(url, this.headers)
+      .pipe(
+        map( resp => {
+
+          const usuarios = resp.usuarios.map(user => new Usuario(user.nombre, user.email, '', user.google, user.img, user.role, user.uid))
+
+          return {
+            total: resp.total,
+            usuarios
+          }
+        })
+      );
   }
 
 
