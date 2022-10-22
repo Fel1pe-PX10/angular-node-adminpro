@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import Swal from 'sweetalert2';
 
 import { catchError, map, Observable, of, tap } from 'rxjs';
 
@@ -134,6 +135,13 @@ export class UsuarioService {
           }
         })
       );
+  }
+
+  eliminarUsuario(usuario: Usuario){
+    
+    const url = `${ base_url }/usuarios/${usuario.uid}`
+    return this.http.delete(url, this.headers);
+
   }
 
 
