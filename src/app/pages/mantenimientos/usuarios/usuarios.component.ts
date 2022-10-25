@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { delay, Subscription } from 'rxjs';
 
-import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from '../../../models/usuario.model';
-import { BusquedasService } from 'src/app/services/busquedas.service';
 import Swal from 'sweetalert2';
+
+import { BusquedasService } from 'src/app/services/busquedas.service';
+import { ModalImageService } from 'src/app/services/modal-image.service';
+import { UsuarioService } from '../../../services/usuario.service';
+
+import { Usuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-usuarios',
@@ -11,7 +15,7 @@ import Swal from 'sweetalert2';
   styles: [
   ]
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, OnDestroy {
 
   public totalUsuarios: number = 0;
   public usuarios: Usuario[] = []; 
@@ -19,11 +23,27 @@ export class UsuariosComponent implements OnInit {
   public desde: number = 0;
   public cargando: boolean = true;
 
+  public imgSubs!: Subscription;
+
   constructor( private usuarioService: UsuarioService,
-               private busquedaService: BusquedasService ) { }
+               private busquedaService: BusquedasService,
+               private modalImagenService: ModalImageService ) { }
+  
+  
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.cargarUsuarios();
+
+    this.imgSubs = this.modalImagenService.nuevaImagen
+      .pipe(
+        delay(100)
+      )
+      .subscribe(img => {
+        this.cargarUsuarios()
+      });
   }
 
   cargarUsuarios(){
@@ -95,6 +115,20 @@ export class UsuariosComponent implements OnInit {
     })
     
     return;
+  }
+
+  cambiarRole(usuario:Usuario){
+    
+    this.usuarioService.guardarUsuario(usuario)
+      .subscribe(resp => {
+        console.log(resp);
+        Swal.fire('Actualizado', 'El usuario se actualizó', 'success')
+      });
+    
+  }
+
+  abrirModal(usuario: Usuario){
+    this.modalImagenService.abrirModal('usuarios', usuario.uid, usuario.img); 
   }
 
 }
