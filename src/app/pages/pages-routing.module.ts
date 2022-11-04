@@ -13,6 +13,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 
 
+import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 
 
@@ -30,9 +31,9 @@ const routes: Routes = [
       { path: 'rxjs', component: RxjsComponent, data: {titulo: 'operadores'} },
 
       // Mantenimientos
-      { path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Usuarios de Aplicación'} },
+      { path: 'hospitales', component: HospitalesComponent, data: {titulo: 'Mantenimientos Hospitales'} },
       { path: 'medicos', component: UsuariosComponent, data: {titulo: 'Usuarios de Aplicación'} },
-      { path: 'hospitales', component: UsuariosComponent, data: {titulo: 'Usuarios de Aplicación'} }
+      { path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Mantenimientos Usuarios'} }
     ]
   }, 
 ];
