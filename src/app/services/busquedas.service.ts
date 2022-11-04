@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
+import { Hospital } from '../models/hospital.model';
 
 const base_url = environment.base_url;
 
@@ -14,6 +15,9 @@ export class BusquedasService {
 
   private transformarUsuarios( valores:any[]): Usuario[]{
     return valores.map((user:any) => new Usuario(user.nombre, user.email, '', user.google, user.img, user.role, user.uid))
+  }
+  private transformarHospitales( valores:any[]): Hospital[]{
+    return valores;
   }
 
   constructor( private http:HttpClient ) { }
@@ -38,6 +42,14 @@ export class BusquedasService {
           switch (tipo) {
             case 'usuarios':
               return this.transformarUsuarios(resp.data)
+              break;
+
+            case 'hospitales':
+              return this.transformarHospitales(resp.data)
+              break;
+
+            case 'medicos':
+              return resp.data
               break;
           
             default:

@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 import { Hospital } from '../../../models/hospital.model';
 
+import { BusquedasService } from '../../../services/busquedas.service';
 import { HospitalService } from '../../../services/hospital.service';
 import { ModalImageService } from 'src/app/services/modal-image.service';
 
@@ -18,13 +19,15 @@ import { ModalImageService } from 'src/app/services/modal-image.service';
 })
 export class HospitalesComponent implements OnInit {
 
-  public hospitales: Hospital[] = [];
   public cargando: boolean = true;
+  public hospitales: Hospital[] = [];
+  public hospitalesTmp: Hospital[] = [];
 
   public imgSubs!: Subscription;
 
   constructor( private hospitalService: HospitalService,
-               private modalImagenService: ModalImageService) { }
+               private modalImagenService: ModalImageService,
+               private busquedaService: BusquedasService) { }
 
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe();
@@ -49,6 +52,7 @@ export class HospitalesComponent implements OnInit {
       .subscribe(hospitales => {
         this.cargando = false;
         this.hospitales = hospitales;
+        this.hospitalesTmp = hospitales;
       });
   }
 
@@ -70,7 +74,7 @@ export class HospitalesComponent implements OnInit {
   }
 
   async abrirSweetAlert(){
-    const { value } = await Swal.fire<string>({
+    const { value = '' } = await Swal.fire<string>({
       title: 'Crear Hospital',
       text: 'Ingrese el nombre del nuevo hospital',
       input: 'text',
@@ -89,6 +93,21 @@ export class HospitalesComponent implements OnInit {
 
   abrirModal(hospital: Hospital){
     this.modalImagenService.abrirModal('hospitales', hospital._id, hospital.img); 
+  }
+
+  buscar(termino: string): Hospital[] | undefined {
+    
+    if(termino.trim().length === 0){
+      return this.hospitales = this.hospitalesTmp;
+    }
+
+    this.busquedaService.buscar('hospitales', termino)
+      .subscribe(resp => {
+        this.hospitales = resp
+      })
+
+
+    return [];
   }
 
 
