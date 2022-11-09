@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
 import { Hospital } from '../models/hospital.model';
+import { Medico } from '../models/medico.model';
 
 const base_url = environment.base_url;
 
@@ -17,6 +18,9 @@ export class BusquedasService {
     return valores.map((user:any) => new Usuario(user.nombre, user.email, '', user.google, user.img, user.role, user.uid))
   }
   private transformarHospitales( valores:any[]): Hospital[]{
+    return valores;
+  }
+  private transformarMedicos( valores:any[]): Medico[]{
     return valores;
   }
 
@@ -49,7 +53,7 @@ export class BusquedasService {
               break;
 
             case 'medicos':
-              return resp.data
+              return this.transformarMedicos(resp.data)
               break;
           
             default:
