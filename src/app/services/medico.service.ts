@@ -34,17 +34,17 @@ export class MedicoService {
   }
 
   crearMedico( medico?: Medico | string ){
-    const url = `${ base_url }/medico`
+    const url = `${ base_url }/medicos`
     return this.http.post<{ok: boolean, medico: Medico[]}>( url, medico , this.headers );
   }
 
   actualizarMedico( medico: Medico ){
-    const url = `${ base_url }/medico/${ medico._id }`
+    const url = `${ base_url }/medicos/${ medico._id }`
     return this.http.put<{ok: boolean, medico: Medico[]}>( url, medico, this.headers );
   }
 
   eliminarMedico( _id?: string ){
-    const url = `${ base_url }/medico/${ _id }`
+    const url = `${ base_url }/medicos/${ _id }`
     return this.http.delete<{ok: boolean, medico: Medico[]}>( url, this.headers );
   }
 }

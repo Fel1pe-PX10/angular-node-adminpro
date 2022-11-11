@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { delay, Subscription } from 'rxjs';
+
 import Swal from 'sweetalert2';
 
 import { Medico } from '../../../models/medico.model';
@@ -77,5 +79,29 @@ export class MedicosComponent implements OnInit, OnDestroy {
     return [];
   }
 
+  borrarMedico(medico: Medico){
+    Swal.fire({
+      title: '¿Borrar médico?',
+      text: `Esta a punto de eliminar a ${ medico.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Borrar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.medicoService.eliminarMedico(medico._id)
+          .subscribe(resp => {
+            this.cargarMedicos();
+            Swal.fire(
+              'Borrado!',
+              `El médico ${ medico.nombre } ha sido borrado.`,
+              'success'
+            )
+          })
+        
+      }
+    })
+  }
 
 }
