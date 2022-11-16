@@ -33,7 +33,15 @@ export class MedicoService {
       );
   }
 
-  crearMedico( medico?: Medico | string ){
+  cargarMedicosPorId( id: string ){
+    const url = `${ base_url }/medicos/${ id }`
+    return this.http.get<{ok: boolean, medico: Medico}>(url, this.headers)
+      .pipe(
+        map((resp: {ok: boolean, medico: Medico}) => resp.medico)
+      );
+  }
+
+  crearMedico( medico: {nombre: string, hospital: string} ){
     const url = `${ base_url }/medicos`
     return this.http.post<{ok: boolean, medico: Medico[]}>( url, medico , this.headers );
   }
