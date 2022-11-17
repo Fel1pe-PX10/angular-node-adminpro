@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../guards/auth.guard';
 
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { PagesComponent } from './pages.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'progress', component: ProgressComponent, data: {titulo: 'progress'} },
       { path: 'promesas', component: PromesasComponent, data: {titulo: 'promesas'} },
       { path: 'rxjs', component: RxjsComponent, data: {titulo: 'operadores'} },
+      { path: 'buscar/:termino', component: BusquedaComponent, data: {titulo: 'busquedas'} },
 
       // Mantenimientos
       { path: 'hospitales', component: HospitalesComponent, data: {titulo: 'Mantenimientos Hospitales'} },
