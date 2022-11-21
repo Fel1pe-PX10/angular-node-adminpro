@@ -27,6 +27,10 @@ export class UsuarioService {
   get token(): string{
     return localStorage.getItem('token') || '';
   }
+
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' | undefined{
+    return this.usuario.role;
+  }
   
   get uid(): string{
     return this.usuario.uid || '';
